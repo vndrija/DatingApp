@@ -12,6 +12,8 @@ public static class ApplicationServiceExtensions
     IConfiguration configuration)
     {
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddControllers();
         services.AddCors();
 
