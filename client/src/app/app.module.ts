@@ -18,9 +18,11 @@ import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
-
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 
 @NgModule({
@@ -35,9 +37,11 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     MessagesComponent,
     TestErrorsComponent,
     NotFoundComponent,
-    ServerErrorComponent
+    ServerErrorComponent,
+    MemberCardComponent
   ],
   imports: [
+    TabsModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
@@ -51,9 +55,17 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
   ],
   providers: [ {
       provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
+      useClass: ErrorInterceptor, 
       multi: true // Allows multiple interceptors to be applied
-    }],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true // Allows multiple interceptors to be applied
+    },
+  ],
+    
+    
   bootstrap: [AppComponent]
 })
 export class AppModule { }
